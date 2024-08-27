@@ -1,0 +1,4 @@
+一.json-server安装说明
+1.npm install -g json-server
+2.创建一个 db.json 文件
+3.启动服务   json-server --watch db.json    注意：   要在db.json的文件夹下运行才行

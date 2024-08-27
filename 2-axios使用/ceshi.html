@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- <script src="https://cdn.bootcdn.net/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script> -->
+    <script src="./lodash.min.js"></script>
+    <title>Document</title>
+    <style>
+        .box {
+            width: 300px;
+            height: 300px;
+            background: pink;
+        }
+        video{
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <video src="https://v.itheima.net/LapADhV6.mp4" controls></video>
+    </div>
+    
+    <script>
+        
+        const box = document.querySelector('.box')
+
+        const video = document.querySelector('video')
+
+        if(localStorage.getItem('currentTime')){
+            video.onloadeddata = ()=>{
+
+                video.currentTime = localStorage.getItem('currentTime')
+
+            }
+        }
+        
+
+        // video.ontimeupdate = function(){
+        //     console.log(111);//太快了  需要加节流
+        // }
+     
+        video.ontimeupdate = _.throttle(()=>{
+            console.log(video.currentTime); //获得当前的视频时间
+
+            localStorage.setItem('currentTime', video.currentTime)
+        }, 1000)
+
+
+        // let i = 1;
+        // function mouseMove(){
+        //     box.innerHTML = i++;
+        // }
+
+     //   box.addEventListener('mousemove', mouseMove)
+        
+    //lodash防抖
+
+
+    // box.addEventListener('mousemove', _.debounce(mouseMove, 500)) //防抖 debounce
+        
+//    box.addEventListener('mousemove', _.throttle(mouseMove, 2000))  //节流  throttle
+
+    // function debounce(fn, time){
+    //     let _timeout = null;
+
+    //     return function(){
+    //         if(_timeout){
+    //             clearTimeout(_timeout);
+    //             _timeout = null;
+    //         }
+
+    //         _timeout = setTimeout(function(){
+    //             fn();
+    //         }, time)
+    //     }
+    // }
+   // box.addEventListener('mousemove', debounce(mouseMove, 500))
+
+
+   function throttle(fn, time){
+        let _timeout = null;
+
+        return function(){
+            if(!_timeout){
+                _timeout = setTimeout(function(){
+                    fn();
+                    _timeout = null;
+                }, time)
+            }
+        }
+    }
+   // box.addEventListener('mousemove', throttle(mouseMove, 2000))
+
+    
+    // function Person(){
+    //     this.eyes =2
+    //     this.head = 1
+    // }
+
+    // function Woman(){
+
+    // }
+    // function Man(){
+        
+    // }
+
+    // Woman.prototype = new Person()
+    // Woman.prototype.constructor = Woman
+    // Woman.prototype.baby = function(){}
+
+    // Man.prototype = new Person()
+    // Man.prototype.constructor = Man
+
+
+    // let a1 = new Woman();
+    // let a2 = new Man();
+
+    // console.log('女人：', a1);
+    // console.log('男人', a2);
+
+    </script>
+</body>
+</html>
